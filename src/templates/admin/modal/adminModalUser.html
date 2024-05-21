@@ -1,0 +1,65 @@
+{% from 'admin/modal/formHelper.html' import renderField %}
+{% macro renderAdminModalUserSave(title, formUser) %}
+<div class="modal" id="usersave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 fw-bolder" id="staticBackdropLabel">{{title}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/arus" method="post">
+                    {{formUser.csrf_token}}
+                    {{ renderField(formUser.nombres, placeholder=formUser.nombres.label.text)}}
+                    {{ renderField(formUser.apellidos, placeholder=formUser.apellidos.label.text)}}
+                    {{ renderField(formUser.email, placeholder=formUser.email.label.text)}}
+                    {{ renderField(formUser.direccion, placeholder=formUser.direccion.label.text)}}
+                    {{ renderField(formUser.celular, placeholder=formUser.celular.label.text)}}
+                    {{ renderField(formUser.estado) }}
+                    <div class="col-md-12">
+                        <input class="pull-right btn btn-primary btn-lg" type="submit" value="Enviar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro renderAdminModalUserUpdate(title, formUser, dataUser) %}
+<div class="modal" id="userupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 fw-bolder" id="staticBackdropLabel">{{title}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/aruu" method="post">
+                    {{formUser.csrf_token}}
+                    <div class="">
+                    {{ renderField(formUser.id, value=dataUser.pfsemuserid)}}
+                    </div>
+                    {{ renderField(formUser.nombres, value=dataUser.pfsemusernombres)}}
+                    {{ renderField(formUser.apellidos, value=dataUser.pfsemuserapellidos)}}
+                    {{ renderField(formUser.email, value=dataUser.pfsemuseremail)}}
+                    {{ renderField(formUser.direccion, value=dataUser.pfsemuserdireccion)}}
+                    {{ renderField(formUser.celular, value=dataUser.pfsemusercelular)}}
+                    {{ renderField(formUser.estado, value=dataUser.pfsemuserestado) }}
+                    <div class="col-md-12">
+                        <input class="pull-right btn btn-primary btn-lg" type="submit" value="Actualizar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,38 @@
+<section class="starfn">
+    <div>
+        <div class="row">
+            <div class="col-6">
+                <h1>Menu</h1>
+            </div>
+            <div class="col-6">
+                <button class="abg">
+                    <div class="hamburger">
+                        <hr>
+                        <hr>
+                        <hr>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <nav class="navs">
+        <ul>
+            <li><a href="/"><span class="icon">Inicio</span></a></li>
+            <li><a href="/crem"><span class="icon">Email Marketing</span></a></li>
+            <li><a href="/crpm"><span class="icon">Productos</span></a></li>
+            <li><a href="/aru"><span class="icon">Usuarios</span></a></li>
+            <li><a href="/"><span class="icon">Quienes Somos</span></a></li>
+            <li class="logger">
+                <ul>
+                    {% if current_user.is_authenticated %}
+                    <li><span class="bienvenido">Bienvenido:</span></li>
+                    <li><img class="imguser" src="{{current_user.avatar}}" alt="" style="width: 20px; height: 20px;"></li>
+                    <li><button class="btnlogout"><a href="/rlgt">Logout</a></button></li>
+                    {% else %}
+                    <li class="w-100 p-3"><button class="btnloginin w-100"><a class="nav-link" href="/rlgn">Login-In</a></button></li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</section>

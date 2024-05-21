@@ -1,0 +1,65 @@
+{% from 'client/modal/formHelper.html' import renderField %}
+{% macro renderClientModalProductoSave(title, formProducto) %}
+<div class="modal" id="productosave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 fw-bolder" id="staticBackdropLabel">{{title}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/crpms" method="post">
+                    {{formProducto.csrf_token}}
+                    {{ renderField(formProducto.nombre, placeholder=formProducto.nombre.label.text)}}
+                    {{ renderField(formProducto.image, placeholder=formProducto.image.label.text)}}
+                    {{ renderField(formProducto.detalle, placeholder=formProducto.detalle.label.text)}}
+                    {{ renderField(formProducto.precio, placeholder=formProducto.precio.label.text)}}
+                    {{ renderField(formProducto.stock, placeholder=formProducto.stock.label.text)}}
+                    {{ renderField(formProducto.estado) }}
+                    <div class="col-md-12">
+                        <input class="pull-right btn btn-primary btn-lg" type="submit" value="Enviar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro renderClientModalProductoUpdate(title, formProducto, dataProducto) %}
+<div class="modal" id="productosave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-2 fw-bolder" id="staticBackdropLabel">{{title}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/crpmupdate" method="post">
+                    {{formProducto.csrf_token}}
+                    <div class="">
+                    {{ renderField(formProducto.id, value=dataProducto.pfsemprodid)}}
+                    </div>
+                    {{ renderField(formProducto.nombre, value=dataProducto.pfsemprodnombre)}}
+                    {{ renderField(formProducto.image, value=dataProducto.pfsemprodimage)}}
+                    {{ renderField(formProducto.detalle, value=dataProducto.pfsemproddetalle)}}
+                    {{ renderField(formProducto.precio, value=dataProducto.pfsemprodprecio)}}
+                    {{ renderField(formProducto.stock, value=dataProducto.pfsemprodstock)}}
+                    {{ renderField(formProducto.estado, value=dataProducto.pfsemprodestado) }}
+                    <div class="col-md-12">
+                        <input class="pull-right btn btn-primary btn-lg" type="submit" value="Actualizar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

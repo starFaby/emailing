@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% import 'admin/modal/adminModalUser.html' as ampsave %}
+{% block title %}
+{{ super() }}
+User
+{% endblock%}
+
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('aru.onGetClientControllerUserMarketingModalS') }}" class="btn btn-primary btn-lg">Add
+        Usuario</a>
+    {% if save is true %}
+    {{ ampsave.renderAdminModalUserSave("Registro de Usuarios", formUser) }}
+    {% endif %}
+    {% if update is true %}
+    {{ ampsave.renderAdminModalUserUpdate("Actualización de Usuarios", formUser, dataUser) }}
+    {% endif %}
+    <hr>
+    <div class="row">
+        <div class="col-8">
+            <strong>Buscar Por: {{ tag }}</strong>
+        </div>
+        <div class="col-4">
+            <form action="" method="post" autocomplete="off">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" class="form-control" name="tag" id="tag" placeholder="Nombre..." />
+                    </div>
+                    <div class="col-6" align="left">
+                        <input type="submit" value="Search" class="form-control btn btn-primary " name="">
+                    </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive">
+
+        <table class="table text-center">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">createdat</th>
+                    <th scope="col" colspan="2">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if userList != []: %} 
+                {% for item in userList.items %}
+                <tr>
+                    <th scope="row">{{item.pfsemuserid}}</th>
+                    <td>{{item.pfsemusernombres}}</td>
+                    <td>{{item.pfsemuserapellidos}}</td>
+                    <td>{{item.pfsemuseremail}}</td>
+                    <td>{{item.pfsemuserdireccion}}</td>
+                    <td>{{item.pfsemusercelular}}</td>
+                    <td>{{item.pfsemuserestado}}</td>
+                    <td>{{item.pfsemusercreatedat}}</td>
+                    <td>
+                        <button>
+                            <a href="{{ url_for('aru.onGetAdminControllerUserModalUpdateView', id=item.pfsemuserid) }}">
+                                actualizar
+                            </a>
+                        </button>
+                    </td>
+                    <td>
+                        <button>
+                            <a href="{{ url_for('aru.onGetAdminControllerUserDelete', id=item.pfsemuserid) }}">Eliminar
+                            </a>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="9">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        {% if userList != []: %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if userList.has_prev %}
+                <li class="page-item"> <a class="page-link"
+                        href="{{ url_for('aru.onGetAdminControllerUserViewList', page=userList.prev_num )}}">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item"> <a class="page link btn disabled" href="#">Previous</a></li>
+                {% endif %}
+                {% for page in userList.iter_pages(left_edge=3, right_edge=3) %}
+                {% if page %}
+
+                {% if page==userList.page %}
+                <li class="page-item active"><a class="page-link"
+                        href="{{ url_for('aru.onGetAdminControllerUserViewList', page=page) }}">{{ page
+                        }}</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link"
+                        href="{{ url_for('aru.onGetAdminControllerUserViewList', page=page) }}">{{ page
+                        }}</a></li>
+                {% endif %}
+
+                {% else %}
+                <li class="page-item disabled" id="example_ellipsis"><a href="#" class="page-link">…</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if userList.has_next %}
+                <li class="page-item"> <a class="page-link"
+                        href="{{ url_for('aru.onGetAdminControllerUserViewList', page=userList.next_num )}}">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item"> <a class="page link btn disabled" href="#">Previous</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+{% block custom_scripts %}
+{% if (save is true) or (update is true) %}
+<script>
+    window.onload = function () {
+        $("#usersave").modal("show");
+        $("#userupdate").modal("show");
+    }
+</script>
+{% endif %}
+{% endblock %}
+{% endblock %}
